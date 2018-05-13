@@ -38,17 +38,13 @@ export class TennisGame1 implements TennisGame {
         }
         else if (this.m_score1 >= 4 || this.m_score2 >= 4) {
             const minusResult: number = this.m_score1 - this.m_score2;
-            if (Math.abs(minusResult) === 1) score = 'Advantage ';
-            else score = 'Win for ';
-            const player = minusResult > 0 ? "player1" : 'player2';
-            score += player
-
-
+            let typeOfScore = Math.abs(minusResult) === 1 ? 'Advantage ' : 'Win for ';
+            const leader = minusResult > 0 ? "player1" : 'player2';
+            score = typeOfScore + leader;
         }
         else {
-            score += scoreTitles[this.m_score1];
-            score += "-"
-            score += scoreTitles[this.m_score2];
+            let pointScores = scoreTitles[this.m_score1] + '-' +scoreTitles[this.m_score2];
+            score = pointScores
         }
         return score;
     }
