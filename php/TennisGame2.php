@@ -19,7 +19,9 @@ class TennisGame2 implements TennisGame
     public function getScore()
     {
         $score = "";
-        if ($this->P1point == $this->P2point && $this->P1point < 4) {
+        $equalPoints = $this->P1point == $this->P2point;
+        $beforeDeuce = $this->P1point < 3;
+        if ($equalPoints && $beforeDeuce) {
             if ($this->P1point == 0) {
                 $score = "Love";
             }
@@ -32,7 +34,7 @@ class TennisGame2 implements TennisGame
             $score .= "-All";
         }
 
-        if ($this->P1point == $this->P2point && $this->P1point >= 3) {
+        if ($equalPoints && $this->P1point >= 3) {
             $score = "Deuce";
         }
 
