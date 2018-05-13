@@ -8,16 +8,7 @@ function pointScore(p1Score, p2Score) {
         '2': "Thirty",
         "3": 'Forty',
     };
-    let pointScores = scoreTitles[p1Score] + '-' + scoreTitles[p2Score];
-    return pointScores;
-}
-
-function advantageOrWinScore(p1Score, p2Score) {
-    const minusResult: number = p1Score - p2Score;
-    const leader = minusResult > 0 ? "player1" : 'player2';
-    let typeOfScore = Math.abs(minusResult) === 1 ? 'Advantage ' : 'Win for ';
-    let advantageOrWin = typeOfScore + leader;
-    return advantageOrWin;
+    return scoreTitles[p1Score] + '-' + scoreTitles[p2Score];
 }
 
 function equalityScore(p1Score) {
@@ -26,8 +17,7 @@ function equalityScore(p1Score) {
         '1': "Fifteen-All",
         '2': "Thirty-All",
     };
-    let sameScore = sameScores[p1Score] || "Deuce";
-    return sameScore;
+    return sameScores[p1Score] || "Deuce";
 }
 
 export class TennisGame1 implements TennisGame {
@@ -42,6 +32,7 @@ export class TennisGame1 implements TennisGame {
     }
 
     wonPoint(playerName: string): void {
+        // TODO BUG a game cannot be played if the first player isn't called "player1"!
         if (playerName === 'player1')
             this.m_score1 += 1;
         else
@@ -55,7 +46,11 @@ export class TennisGame1 implements TennisGame {
             return equalityScore(p1Score);
         }
         else if (p1Score >= 4 || p2Score >= 4) {
-            return advantageOrWinScore(p1Score, p2Score);
+            const minusResult: number = p1Score - p2Score;
+            const leader = minusResult > 0 ? this.player1Name : this.player2Name;
+            let typeOfScore = Math.abs(minusResult) === 1 ? 'Advantage ' : 'Win for ';
+            let s = typeOfScore + leader;
+            return s;
         }
         else {
             return pointScore(p1Score, p2Score);
