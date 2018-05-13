@@ -51,20 +51,14 @@ export class TennisGame1 implements TennisGame {
     getScore(): string {
         let p1Score = this.m_score1;
         let p2Score = this.m_score2;
-        let score: string = '';
         if (p1Score === p2Score) {
-            let sameScore = equalityScore(p1Score);
-            score = sameScore;
+            return equalityScore(p1Score);
         }
         else if (p1Score >= 4 || p2Score >= 4) {
-            let advantageOrWin = advantageOrWinScore(p1Score, p2Score);
-            score = advantageOrWin;
+            return advantageOrWinScore(p1Score, p2Score);
         }
         else {
-
-            let pointScores = pointScore(p1Score, p2Score);
-            score = pointScores
+            return pointScore(p1Score, p2Score);
         }
-        return score;
     }
 }
