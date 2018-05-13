@@ -21,35 +21,28 @@ class TennisGame2 implements TennisGame
 
     public function getScore()
     {
-        $score = "";
-
         $equality = $this->P1point == $this->P2point;
         if ($equality) {
-            $p1DidntWinYet = $this->P1point < 4;
-            if ($p1DidntWinYet) {
+            $beforeDeuce = $this->P1point < 3;
+            if ($beforeDeuce) {
                 $score = pointScores[$this->P1point]."-All";
-            }
-
-            if ($this->P1point >= 3) {
+            } else {
                 $score = "Deuce";
             }
         } else {
 
+            $leader = $this->P1point > $this->P2point ? $this->player1Name : $this->player2Name;
 
-            if (max($this->P1point, $this->P2point) < 4) {
+            if (max($this->P1point, $this->P2point) >= 4 && abs($this->P1point - $this->P2point) >= 2) {
+                $score = "Win for $leader";
+            } else if (min($this->P1point, $this->P2point) >= 3) {
+                $score = "Advantage $leader";
+            } else  {
                 $this->P1res = pointScores[$this->P1point];
                 $this->P2res = pointScores[$this->P2point];
                 $score = "{$this->P1res}-{$this->P2res}";
             }
 
-            $leader = $this->P1point > $this->P2point ? $this->player1Name : $this->player2Name;
-            if (min($this->P1point, $this->P2point) >= 3) {
-                $score = "Advantage $leader";
-            }
-
-            if (max($this->P1point, $this->P2point) >= 4 && abs($this->P1point - $this->P2point) >= 2) {
-                $score = "Win for $leader";
-            }
         }
 
         return $score;
