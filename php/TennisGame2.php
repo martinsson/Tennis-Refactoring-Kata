@@ -25,7 +25,7 @@ class TennisGame2 implements TennisGame
         if ($equality) {
             $beforeDeuce = $this->P1point < 3;
             if ($beforeDeuce) {
-                $score = pointScores[$this->P1point]."-All";
+                $score = pointScores[$this->P1point] . "-All";
             } else {
                 $score = "Deuce";
             }
@@ -33,15 +33,20 @@ class TennisGame2 implements TennisGame
 
             $leader = $this->P1point > $this->P2point ? $this->player1Name : $this->player2Name;
 
-            if (max($this->P1point, $this->P2point) >= 4 && abs($this->P1point - $this->P2point) >= 2) {
+            $difference = abs($this->P1point - $this->P2point);
+            $isPastForty = max($this->P1point, $this->P2point) >= 4;
+            $isPastDeuce = min($this->P1point, $this->P2point) >= 3;
+
+            if ($isPastForty && $difference >= 2) {
                 $score = "Win for $leader";
-            } else if (min($this->P1point, $this->P2point) >= 3) {
+            } else if ($isPastDeuce) {
                 $score = "Advantage $leader";
-            } else  {
+            } else {
                 $this->P1res = pointScores[$this->P1point];
                 $this->P2res = pointScores[$this->P2point];
                 $score = "{$this->P1res}-{$this->P2res}";
             }
+
 
         }
 
@@ -74,7 +79,7 @@ class TennisGame2 implements TennisGame
 
     public function wonPoint($player)
     {
-        if ($player == "player1") {
+        if ($player == $this->player1Name) {
             $this->P1Score();
         } else {
             $this->P2Score();
