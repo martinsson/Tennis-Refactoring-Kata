@@ -32,19 +32,7 @@ class TennisGame2 implements TennisGame
         if ($equalPoints && ($this->P1point >= 3)) {
             $score = "Deuce";
         }
-
-        if ($this->P1point > 0 && $this->P2point == 0) {
-            $this->P1res = pointScores[$this->P1point];
-            $this->P2res = "Love";
-            $score = "{$this->P1res}-{$this->P2res}";
-        }
-
-        if ($this->P2point > 0 && $this->P1point == 0) {
-            $this->P2res = pointScores[$this->P2point];
-            $this->P1res = "Love";
-            $score = "{$this->P1res}-{$this->P2res}";
-        }
-
+        
         if (!$equalPoints && max($this->P1point , $this->P2point) < 4) {
             $this->P1res = pointScores[$this->P1point];
             $this->P2res = pointScores[$this->P2point];
