@@ -1,6 +1,7 @@
 import {TennisGame} from './TennisGame';
 
 export class TennisGame1 implements TennisGame {
+    // TODO replace with player class?
     private m_score1: number = 0;
     private m_score2: number = 0;
     private player1Name: string;
@@ -12,6 +13,7 @@ export class TennisGame1 implements TennisGame {
     }
 
     wonPoint(playerName: string): void {
+        // TODO replace with map?
         if (playerName === this.player1Name)
             this.m_score1 += 1;
         else
@@ -19,6 +21,7 @@ export class TennisGame1 implements TennisGame {
     }
 
     getScore(): string {
+        // TODO here the player object would certainly come in handy
         let p1Score = this.m_score1;
         let p2Score = this.m_score2;
         if (p1Score === p2Score) {
