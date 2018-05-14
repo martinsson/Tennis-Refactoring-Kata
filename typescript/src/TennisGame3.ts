@@ -14,22 +14,49 @@ export class TennisGame3 implements TennisGame {
     }
 
     getScore(): string {
-        let beforeDeuce = (this.p1 + this.p2 < 6);
-        let noOneHasWonYet = this.p1 < 4 && this.p2 < 4;
-        let equality = this.p1 === this.p2;
-        if (noOneHasWonYet && beforeDeuce) {
-            return equality ? pointTitles[this.p1] + '-All' : pointTitles[this.p1] + '-' + pointTitles[this.p2];
-        } else if (equality) {
+        if (this.noWinnerYet() && this.isBeforeDeuce()) {
+            return this.equality() ? this.equalityScore() : this.normalScore();
+        } else if (this.equality()) {
             return 'Deuce';
         } else {
-            let leaderName: string = this.p1 > this.p2 ? this.p1N : this.p2N;
-            let gameHasWinner = Math.abs(this.p1 - this.p2) > 1;
-            return (gameHasWinner ? 'Win for ' : 'Advantage ') + leaderName;
+            return this.winOrAdvantageScore() + this.findLeaderName();
         }
     }
 
+    private isBeforeDeuce() {
+        return this.p1 + this.p2 < 6;
+    }
+
+    private noWinnerYet() {
+        return this.p1 < 4 && this.p2 < 4;
+    }
+
+    private equality() {
+        return this.p1 === this.p2;
+    }
+
+    private winOrAdvantageScore() {
+        return (this.hasWinner() ? 'Win for ' : 'Advantage ');
+    }
+
+    private normalScore() {
+        return pointTitles[this.p1] + '-' + pointTitles[this.p2];
+    }
+
+    private equalityScore() {
+        return pointTitles[this.p1] + '-All';
+    }
+
+    private hasWinner() {
+        return Math.abs(this.p1 - this.p2) > 1;
+    }
+
+    private findLeaderName() {
+        return this.p1 > this.p2 ? this.p1N : this.p2N;
+    }
+
     wonPoint(playerName: string): void {
-        if (playerName === 'player1')
+        if (playerName === this.p1N)
             this.p1 += 1;
         else
             this.p2 += 1;
