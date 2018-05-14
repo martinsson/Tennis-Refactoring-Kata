@@ -19,9 +19,9 @@ export class TennisGame3 implements TennisGame {
         let equality = this.p1 === this.p2;
         if (noOneHasWonYet && beforeDeuce) {
             return equality ? pointTitles[this.p1] + '-All' : pointTitles[this.p1] + '-' + pointTitles[this.p2];
+        } else if (equality) {
+            return 'Deuce';
         } else {
-            if (equality)
-                return 'Deuce';
             let leaderName: string = this.p1 > this.p2 ? this.p1N : this.p2N;
             let gameHasWinner = Math.abs(this.p1 - this.p2) > 1;
             return (gameHasWinner ? 'Win for ' : 'Advantage ') + leaderName;
