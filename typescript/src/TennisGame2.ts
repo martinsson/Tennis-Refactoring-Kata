@@ -12,23 +12,22 @@ let deuce = {
     showScore: (P1point, P2point) => "Deuce"
 };
 let normalPointScore = {
-    matches: (P1point, P2point) => P1point < 4 || P2point < 4,
+    matches: (P1point, P2point) => P1point < 4 && P2point < 4,
     showScore: (P1point, P2point) => pointTitles[P1point] + "-" + pointTitles[P2point]
 };
 let winScore = {
-    matches: (P1point, P2point) => (P1point - P2point) >= 2,
+    matches: (P1point, P2point) => Math.abs(P1point - P2point) >= 2,
     showScore: (P1point, P2point) => "Win for " + winnerName(P1point, P2point)
 };
 let advantageScore = {
-    matches: (P1point, P2point) => (P1point - P2point) ===1,
-    showScore: (P1point, P2point) => "Advantage for " + winnerName(P1point, P2point)
+    matches: (P1point, P2point) => Math.abs(P1point - P2point) === 1 && P1point >= 3 && P2point >= 3,
+    showScore: (P1point, P2point) => "Advantage " + winnerName(P1point, P2point)
 };
 const scoreTypes: any[] = [
     deuce,
     equalPointScore,
-    normalPointScore,
     advantageScore,
-
+    normalPointScore,
 ];
 
 function winnerName(P1point, P2point) {
@@ -39,9 +38,6 @@ export class TennisGame2 implements TennisGame {
     P1point: number = 0;
     P2point: number = 0;
 
-    P1res: string = '';
-    P2res: string = '';
-
     private player1Name: string;
     private player2Name: string;
 
@@ -51,25 +47,21 @@ export class TennisGame2 implements TennisGame {
     }
 
     getScore(): string {
-        let foundType = _.find(scoreTypes, scoreType => scoreType.matches(this.P1point, this.P2point))
-            || winScore
-        return foundType.showScore(this.P1point, this.P2point);
+        let isMatch = scoreType => scoreType.matches(this.P1point, this.P2point);
+        let matchingScore = _.find(scoreTypes, isMatch) || winScore;
+        return matchingScore.showScore(this.P1point, this.P2point);
     }
 
     SetP1Score(score: number): void {
-
         for (let i = 0; i < score; i++) {
             this.P1Score();
         }
-
     }
 
     SetP2Score(score: number): void {
-
         for (let i = 0; i < score; i++) {
             this.P2Score();
         }
-
     }
 
     P1Score(): void {
