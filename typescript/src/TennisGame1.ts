@@ -1,29 +1,43 @@
 import {TennisGame} from './TennisGame';
 
+class Player {
+
+    points: number;
+
+    constructor(public name: string) {
+        this.points = 0;
+
+    }
+
+    winPoint() {
+        this.points++;
+    }
+}
+
 export class TennisGame1 implements TennisGame {
-    // TODO replace with player class?
-    private m_score1: number = 0;
-    private m_score2: number = 0;
-    private player1Name: string;
-    private player2Name: string;
+    private player1: Player;
+    private player2: Player;
 
     constructor(player1Name: string, player2Name: string) {
-        this.player1Name = player1Name;
-        this.player2Name = player2Name;
+        this.player1 = new Player(player1Name);
+        this.player2 = new Player(player2Name);
     }
 
     wonPoint(playerName: string): void {
+
         // TODO replace with map?
-        if (playerName === this.player1Name)
-            this.m_score1 += 1;
-        else
-            this.m_score2 += 1;
+        let player: Player = this.areYou(playerName) ? this.player1 : this.player2;
+        player.winPoint();
+    }
+
+    private areYou(playerName: string) {
+        return playerName === this.player1.name;
     }
 
     getScore(): string {
         // TODO here the player object would certainly come in handy
-        let p1Score = this.m_score1;
-        let p2Score = this.m_score2;
+        let p1Score = this.player1.points;
+        let p2Score = this.player2.points;
         if (p1Score === p2Score) {
             return equalityScore(p1Score);
         }
@@ -37,7 +51,7 @@ export class TennisGame1 implements TennisGame {
 
     private advantageOrWin(p1Score, p2Score) {
         const minusResult: number = p1Score - p2Score;
-        const leader = minusResult > 0 ? this.player1Name : this.player2Name;
+        const leader = minusResult > 0 ? this.player1.name : this.player2.name;
         let typeOfScore = Math.abs(minusResult) === 1 ? 'Advantage ' : 'Win for ';
         return typeOfScore + leader;
     }
