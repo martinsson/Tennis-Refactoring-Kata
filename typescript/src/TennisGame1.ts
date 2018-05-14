@@ -18,7 +18,6 @@ export class TennisGame1 implements TennisGame {
 
 
     getScore(): string {
-        // TODO here the player object would certainly come in handy
         let p1 = this.player1;
         let p2 = this.player2;
         if (p1.points === p2.points) {
@@ -40,23 +39,15 @@ export class TennisGame1 implements TennisGame {
     }
 }
 
-// TODO each half part could go onto the player object
 function pointScore(p1: Player, p2: Player) {
-    const scoreTitles = {
-        '0': "Love",
-        '1': "Fifteen",
-        '2': "Thirty",
-        "3": 'Forty',
-    };
-    return scoreTitles[p1.points] + '-' + scoreTitles[p2.points];
+    return p1.pointTitle() + '-' + p2.pointTitle();
 }
 
 function equalityScore(player: Player) {
-    const sameScores = {
-        '0': "Love-All",
-        '1': "Fifteen-All",
-        '2': "Thirty-All",
-    };
-    return sameScores[player.points] || "Deuce";
+    if (player.points >= 3) {
+        return "Deuce"
+    } else {
+        return player.pointTitle() + "-All";
+    }
 }
 

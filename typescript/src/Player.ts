@@ -1,3 +1,10 @@
+const scoreTitles = {
+    '0': "Love",
+    '1': "Fifteen",
+    '2': "Thirty",
+    "3": 'Forty',
+};
+
 export class Player {
 
     points: number;
@@ -14,5 +21,9 @@ export class Player {
 
     winPoint() {
         this.points++;
+    }
+
+    pointTitle() {
+        return scoreTitles[this.points];
     }
 }
