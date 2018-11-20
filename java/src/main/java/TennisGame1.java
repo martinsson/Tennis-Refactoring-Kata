@@ -6,20 +6,8 @@ public class TennisGame1 implements TennisGame {
     private int m_score2 = 0;
     private String player1Name;
     private String player2Name;
-    private Map<Integer, String> scoreNames = new HashMap<Integer, String>() {{
-        put(0, "Love");
-        put(1, "Fifteen");
-        put(2, "Thirty");
-        put(3, "Forty");
-    }};
-    private TreeMap<Integer, String> playoffScores = new TreeMap<Integer, String>() {{
-        put(-2, "Win for player2");
-        put(-1, "Advantage player2");
-        put(0, "Deuce");
-        put(1, "Advantage player1");
-        put(2, "Win for player1");
-    }};
 
+    private List<String> pointScores = Arrays.asList("Love", "Fifteen", "Thirty", "Forty");
 
     public TennisGame1(String player1Name, String player2Name) {
         this.player1Name = player1Name;
@@ -36,14 +24,33 @@ public class TennisGame1 implements TennisGame {
     public String getScore() {
         String score = "";
         if (m_score1 == m_score2 && m_score1 + m_score1 <= 4) {
-            score = this.scoreNames.get(m_score1) + "-All";
+
+            score = getPointScore(m_score1) + "-All";
+
         } else if (m_score1 >= 4 || m_score2 >= 4 || m_score1 == m_score2) {
-            int diff = m_score1 - m_score2;
-            int min = Math.min(2, Math.max(-2, diff));
-            score = playoffScores.get(min);
+
+            int scoreDiff = Math.abs(m_score1 - m_score2);
+            if (scoreDiff == 0) {
+                score = "Deuce";
+            } else if (scoreDiff == 1) {
+                score = "Advantage " + leadingPlayerName();
+            } else {
+                score = "Win for " + leadingPlayerName();
+            }
+
         } else {
-            score = this.scoreNames.get(m_score1) + "-" + this.scoreNames.get(m_score2);
+
+            score = getPointScore(m_score1) + "-" + getPointScore(m_score2);
+
         }
         return score;
+    }
+
+    private String getPointScore(int m_score1) {
+        return this.pointScores.get(m_score1);
+    }
+
+    private String leadingPlayerName() {
+        return m_score1 > m_score2 ? "player1" : "player2";
     }
 }
