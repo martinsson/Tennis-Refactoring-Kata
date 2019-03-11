@@ -23,11 +23,11 @@ public class TennisGame1 implements TennisGame {
 
     public String getScore() {
         String score = "";
-        if (m_score1 == m_score2 && m_score1 + m_score1 <= 4) {
+        if (hasEqualScoreBeginningOfGame()) {
 
             score = getPointScore(m_score1) + "-All";
 
-        } else if (m_score1 >= 4 || m_score2 >= 4 || m_score1 == m_score2) {
+        } else if (isTieBreak()) {
 
             int scoreDiff = Math.abs(m_score1 - m_score2);
             if (scoreDiff == 0) {
@@ -44,6 +44,14 @@ public class TennisGame1 implements TennisGame {
 
         }
         return score;
+    }
+
+    private boolean isTieBreak() {
+        return m_score1 >= 4 || m_score2 >= 4 || m_score1 == m_score2;
+    }
+
+    private boolean hasEqualScoreBeginningOfGame() {
+        return m_score1 == m_score2 && m_score1 + m_score1 <= 4;
     }
 
     private String getPointScore(int m_score1) {
