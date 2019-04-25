@@ -29,14 +29,7 @@ public class TennisGame1 implements TennisGame {
 
         } else if (isTieBreak()) {
 
-            int scoreDiff = Math.abs(m_score1 - m_score2);
-            if (scoreDiff == 0) {
-                score = "Deuce";
-            } else if (scoreDiff == 1) {
-                score = "Advantage " + leadingPlayerName();
-            } else {
-                score = "Win for " + leadingPlayerName();
-            }
+            score = getTieBreakScore();
 
         } else {
 
@@ -44,6 +37,17 @@ public class TennisGame1 implements TennisGame {
 
         }
         return score;
+    }
+
+    private String getTieBreakScore() {
+        int scoreDiff = Math.abs(m_score1 - m_score2);
+        if (scoreDiff == 0) {
+             return "Deuce";
+        } else if (scoreDiff == 1) {
+            return "Advantage " + leadingPlayerName();
+        } else {
+            return "Win for " + leadingPlayerName();
+        }
     }
 
     private boolean isTieBreak() {
